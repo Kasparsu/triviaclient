@@ -1,4 +1,7 @@
 <template>
+    <div >
+
+
     <div class="container" v-if="!started">
         <div class="columns">
             <div class="column">
@@ -9,6 +12,17 @@
             </div>
         </div>
         <button @click="start">Start</button>
+
+    </div>
+        <div class="container" v-if="question">
+            <h1 class="is-size-1" v-html="question"></h1>
+            <h1 v-if="timer">{{timer}}</h1>
+        </div>
+        <div class="container" v-if="score.length">
+            <ul>
+                <li v-for="points in score">{{points.name}} - {{points.score}}</li>
+            </ul>
+        </div>
     </div>
 </template>
 <script>
@@ -32,6 +46,17 @@
                 if(msg.action === 'uid'){
                     this.uid = msg.data.uid;
                 }
+                if(msg.action === 'question'){
+                    this.question = msg.data.question;
+                    this.timer = 30;
+                }
+                if(msg.action === 'timeout'){
+                    this.timer--;
+                }
+                if(msg.action === 'score'){
+                    this.question = '';
+                    this.score = msg.data.score;
+                }
             };
         },
         data(){
@@ -40,7 +65,10 @@
                 code: '',
                 uid: '',
                 ws: null,
-                started: false
+                started: false,
+                question: null,
+                timer: 0,
+                score: []
             }
         },
         methods: {

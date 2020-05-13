@@ -7,6 +7,12 @@
         </div>
         <div v-if="started">
             Game Has Started
+            <h1 v-if="timer">{{timer}}</h1>
+            <div class="columns" v-if="options.length">
+                <div class="column is-one-quarter" v-for="option in options">
+                    <button class="button" v-html="option" @click="answer(option)"></button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -24,6 +30,11 @@
                 }
                 if(msg.action === 'start'){
                     this.started = true;
+                    this.options = msg.data.options;
+                    this.timer = 30;
+                }
+                if(msg.action === 'timeout'){
+                    this.timer--;
                 }
             };
         },
@@ -34,7 +45,9 @@
                 ws: null,
                 joined: false,
                 uid: null,
-                started: false
+                started: false,
+                options: [],
+                timer: 0
             }
         },
         methods: {
@@ -47,6 +60,10 @@
                         code: this.code
                     }
                 }));
+            },
+            answer(option){
+                this.ws.send(JSON.stringify({sender:'player', id: this.uid, action:'answer', data: {answer: option}}));
+                this.options = [];
             }
         }
     }

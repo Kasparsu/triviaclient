@@ -9051,6 +9051,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   components: {
     PlayerList: _PlayerList.default
@@ -9082,6 +9096,20 @@ var _default = {
       if (msg.action === 'uid') {
         _this.uid = msg.data.uid;
       }
+
+      if (msg.action === 'question') {
+        _this.question = msg.data.question;
+        _this.timer = 30;
+      }
+
+      if (msg.action === 'timeout') {
+        _this.timer--;
+      }
+
+      if (msg.action === 'score') {
+        _this.question = '';
+        _this.score = msg.data.score;
+      }
     };
   },
   data: function data() {
@@ -9090,7 +9118,10 @@ var _default = {
       code: '',
       uid: '',
       ws: null,
-      started: false
+      started: false,
+      question: null,
+      timer: 0,
+      score: []
     };
   },
   methods: {
@@ -9117,26 +9148,53 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return !_vm.started
-    ? _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "columns" }, [
-          _c("div", { staticClass: "column" }, [
-            _vm._v(
-              "\n            Join Code is " + _vm._s(_vm.code) + "\n        "
+  return _c("div", [
+    !_vm.started
+      ? _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "columns" }, [
+            _c("div", { staticClass: "column" }, [
+              _vm._v(
+                "\n            Join Code is " + _vm._s(_vm.code) + "\n        "
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "column is-one-fifth" },
+              [_c("player-list", { attrs: { players: _vm.players } })],
+              1
             )
           ]),
           _vm._v(" "),
+          _c("button", { on: { click: _vm.start } }, [_vm._v("Start")])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.question
+      ? _c("div", { staticClass: "container" }, [
+          _c("h1", {
+            staticClass: "is-size-1",
+            domProps: { innerHTML: _vm._s(_vm.question) }
+          }),
+          _vm._v(" "),
+          _vm.timer ? _c("h1", [_vm._v(_vm._s(_vm.timer))]) : _vm._e()
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.score.length
+      ? _c("div", { staticClass: "container" }, [
           _c(
-            "div",
-            { staticClass: "column is-one-fifth" },
-            [_c("player-list", { attrs: { players: _vm.players } })],
-            1
+            "ul",
+            _vm._l(_vm.score, function(points) {
+              return _c("li", [
+                _vm._v(_vm._s(points.name) + " - " + _vm._s(points.score))
+              ])
+            }),
+            0
           )
-        ]),
-        _vm._v(" "),
-        _c("button", { on: { click: _vm.start } }, [_vm._v("Start")])
-      ])
-    : _vm._e()
+        ])
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -9217,7 +9275,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60089" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62189" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -8904,6 +8904,12 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
+//
 var _default = {
   name: "Play",
   created: function created() {
@@ -8921,6 +8927,12 @@ var _default = {
 
       if (msg.action === 'start') {
         _this.started = true;
+        _this.options = msg.data.options;
+        _this.timer = 30;
+      }
+
+      if (msg.action === 'timeout') {
+        _this.timer--;
       }
     };
   },
@@ -8931,7 +8943,9 @@ var _default = {
       ws: null,
       joined: false,
       uid: null,
-      started: false
+      started: false,
+      options: [],
+      timer: 0
     };
   },
   methods: {
@@ -8944,6 +8958,17 @@ var _default = {
           code: this.code
         }
       }));
+    },
+    answer: function answer(option) {
+      this.ws.send(JSON.stringify({
+        sender: 'player',
+        id: this.uid,
+        action: 'answer',
+        data: {
+          answer: option
+        }
+      }));
+      this.options = [];
     }
   }
 };
@@ -9014,7 +9039,31 @@ exports.default = _default;
       : _vm._e(),
     _vm._v(" "),
     _vm.started
-      ? _c("div", [_vm._v("\n        Game Has Started\n    ")])
+      ? _c("div", [
+          _vm._v("\n        Game Has Started\n        "),
+          _vm.timer ? _c("h1", [_vm._v(_vm._s(_vm.timer))]) : _vm._e(),
+          _vm._v(" "),
+          _vm.options.length
+            ? _c(
+                "div",
+                { staticClass: "columns" },
+                _vm._l(_vm.options, function(option) {
+                  return _c("div", { staticClass: "column is-one-quarter" }, [
+                    _c("button", {
+                      staticClass: "button",
+                      domProps: { innerHTML: _vm._s(option) },
+                      on: {
+                        click: function($event) {
+                          return _vm.answer(option)
+                        }
+                      }
+                    })
+                  ])
+                }),
+                0
+              )
+            : _vm._e()
+        ])
       : _vm._e()
   ])
 }
@@ -9101,7 +9150,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60089" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62189" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
