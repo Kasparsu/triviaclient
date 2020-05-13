@@ -62,7 +62,7 @@
                 }));
             },
             answer(option){
-                this.ws.send(JSON.stringify({sender:'player', id: this.uid, action:'answer', data: {answer: option}}));
+                this.ws.send(JSON.stringify({sender:'player', id: this.uid, action:'answer', data: {answer: option, code: this.code, name: this.name}}));
                 this.options = [];
             }
         }
