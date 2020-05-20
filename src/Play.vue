@@ -13,6 +13,12 @@
                     <button class="button" v-html="option" @click="answer(option)"></button>
                 </div>
             </div>
+            <h2 v-if="availableHintsCount">Available hints</h2>
+            <div class="columns">
+                <div class="column is-one-quarter" v-for="hint of hints">
+                    <button class="button" v-if="hint.available" @click="getHint(hint)">{{hint.name}}</button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -36,6 +42,11 @@
                 if(msg.action === 'timeout'){
                     this.timer--;
                 }
+                if(msg.action === 'hint') {
+                    if(msg.data.type === 'fiftyFifty') {
+                        this.options = msg.data.options;
+                    }
+                }
             };
         },
         data(){
@@ -47,7 +58,14 @@
                 uid: null,
                 started: false,
                 options: [],
-                timer: 0
+                timer: 0,
+                hints: {
+                    fiftyFifty: {
+                        type: 'fiftyFifty',
+                        available: true,
+                        name: 'Fifty Fifty'
+                    },
+                }
             }
         },
         methods: {
@@ -64,6 +82,18 @@
             answer(option){
                 this.ws.send(JSON.stringify({sender:'player', id: this.uid, action:'answer', data: {answer: option}}));
                 this.options = [];
+            },
+            getHint(hint) {
+                if(hint.available) {
+                    this.ws.send(JSON.stringify({sender:'player', id: this.uid, action:'getHint', data: {type: hint.type}}));
+                    hint.available = false;
+                }
+            }
+        },
+        computed: {
+            availableHintsCount() {
+                // Object.values(this.hints).filter(hint => hint.available).length
+                return Object.values(this.hints).reduce((count, item) => count + (item.available ? 1 : 0), 0);
             }
         }
     }

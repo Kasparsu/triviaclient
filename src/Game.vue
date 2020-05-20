@@ -18,9 +18,9 @@
             <h1 class="is-size-1" v-html="question"></h1>
             <h1 v-if="timer">{{timer}}</h1>
         </div>
-        <div class="container" v-if="score.length">
+        <div class="container" v-if="sortedScore.length">
             <ul>
-                <li v-for="points in score">{{points.name}} - {{points.score}}</li>
+                <li v-for="points in sortedScore">{{points.name}} - {{points.score}}</li>
             </ul>
         </div>
     </div>
@@ -69,6 +69,11 @@
                 question: null,
                 timer: 0,
                 score: []
+            }
+        },
+        computed: {
+            sortedScore() {
+                return this.score.sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
             }
         },
         methods: {
