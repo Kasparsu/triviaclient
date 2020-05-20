@@ -87,9 +87,6 @@
                 if(hint.available) {
                     this.ws.send(JSON.stringify({sender:'player', id: this.uid, action:'getHint', data: {type: hint.type}}));
                     hint.available = false;
-
-                } else {
-
                 }
             }
         },
