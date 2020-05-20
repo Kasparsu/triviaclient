@@ -92,13 +92,8 @@
         },
         computed: {
             availableHintsCount() {
-                let count = 0;
-                for (const hint in this.hints) {
-                    if(this.hints[hint].available) {
-                        count++;
-                    }
-                }
-                return count;
+                // Object.values(this.hints).filter(hint => hint.available).length
+                return Object.values(this.hints).reduce((count, item) => count + (item.available ? 1 : 0), 0);
             }
         }
     }
