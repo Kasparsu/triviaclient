@@ -5,6 +5,11 @@
             <input class="input" type="text" placeholder="name" v-model="name">
             <button class="button" @click="join">Join</button>
         </div>
+        <div v-else-if="joined">
+            <h1>Your in game name: {{this.name}}</h1>
+            <br>
+            <h1 v-if="!started"><strong>Waiting for a host! Game starts when host hit "start" button!</strong></h1>
+        </div>
         <div v-if="started">
             Game Has Started
             <h1 v-if="timer">{{timer}}</h1>
