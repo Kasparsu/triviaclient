@@ -1,7 +1,5 @@
 <template>
-    <div >
-
-
+    <div>
     <div class="container" v-if="!started">
         <div class="columns">
             <div class="column">
@@ -16,6 +14,7 @@
     </div>
         <div class="container" v-if="question">
             <h1 class="is-size-1" v-html="question"></h1>
+            <button @click="textToSpeech">Question speech</button>
             <h1 v-if="timer">{{timer}}</h1>
         </div>
         <div class="container" v-if="score.length">
@@ -75,6 +74,28 @@
             start(){
                 this.ws.send(JSON.stringify({sender: 'game', action:'start', id: this.uid}));
                 this.started = true;
+            },
+            textToSpeech(){
+                let available_voices = window.speechSynthesis.getVoices()
+                let english_voice = '';
+                for(let i=0; i<available_voices.length; i++) {
+                    if(available_voices[i].lang === 'en-US') {
+                        english_voice = available_voices[i];
+                        break;
+                    }
+                }
+                if(english_voice === ''){
+                    english_voice = available_voices[0];
+                }
+
+                let speech = new SpeechSynthesisUtterance();
+                speech.lang = 'en-US'
+                speech.rate = 1;
+                speech.pitch = 0.5;
+                speech.text = this.question;
+                speech.voice = english_voice;
+
+                window.speechSynthesis.speak(speech);
             }
         }
     }
