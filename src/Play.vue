@@ -11,8 +11,8 @@
             <h1 v-if="!started"><strong>Waiting for a host! Game starts when host hit "start" button!</strong></h1>
         </div>
         <div v-if="started">
-            Game Has Started
-            <h1 v-if="timer">{{timer}}</h1>
+            <h1><strong>Game Has Started!</strong></h1>
+            <h1 v-if="timer">Time remaining: {{timer}}</h1>
             <div class="columns" v-if="options.length">
                 <div class="column is-one-quarter" v-for="option in options">
                     <button class="button" v-html="option" @click="answer(option)"></button>

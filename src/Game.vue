@@ -3,19 +3,20 @@
     <div class="container" v-if="!started">
         <div class="columns">
             <div class="column">
-                Join Code is {{code}}
+                Join Code: {{code}}
             </div>
             <div class="column is-one-fifth">
+                <h1><strong>Players</strong></h1>
                 <player-list :players="players"></player-list>
             </div>
         </div>
-        <button @click="start">Start</button>
+        <button class="button" @click="start">Start</button>
 
     </div>
         <div class="container" v-if="question">
             <h1 class="is-size-1" v-html="question"></h1>
-            <button @click="textToSpeech">Question speech</button>
-            <h1 v-if="timer">{{timer}}</h1>
+            <button class="button" @click="textToSpeech">Question speech</button>
+            <h1 v-if="timer">Time remaining: {{timer}}</h1>
         </div>
         <div class="container" v-if="score.length">
             <ul>
