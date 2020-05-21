@@ -1,15 +1,24 @@
 <template>
-    <div class="container">
+    <div class="container column is-half">
         <div v-if="!joined">
-            <input class="input" type="text" placeholder="code" v-model="code">
-            <input class="input" type="text" placeholder="name" v-model="name">
+            <div class="field">
+                <div class="control">
+                <input class="input" type="text" placeholder="code" v-model="code" />
+                </div>
+            </div>      
+            <div class="field">
+                <div class="control">
+                <input class="input" type="text" placeholder="name" v-model="name" />
+                </div>
+            </div>
+            
             <button class="button" @click="join">Join</button>
         </div>
-        <div v-if="started">
+        <div v-if="started" class="has-text-centered">
             Game Has Started
-            <h1 v-if="timer">{{timer}}</h1>
+            <h1 v-if="timer" class="is-size-3">{{timer}}</h1>
             <div class="columns" v-if="options.length">
-                <div class="column is-one-quarter" v-for="option in options">
+                <div class="column is-one-quarter" v-for="(option, index) in options" :key="index">
                     <button class="button" v-html="option" @click="answer(option)"></button>
                 </div>
             </div>

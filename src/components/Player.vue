@@ -1,5 +1,5 @@
 <template>
-    <span>{{player}}</span>
+    <span class="is-size-4">{{player}}</span>
 </template>
 
 <script>
