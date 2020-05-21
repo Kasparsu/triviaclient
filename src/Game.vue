@@ -1,29 +1,27 @@
 <template>
     <div>
-        <div class="container" v-if="!started">
+        <div class="container column is-half" v-if="!started">
             <div class="columns">
-                <div class="column">
-                    Join Code is {{code}}
-                </div>
+                <div class="column is-size-3">Join Code is {{code}}</div>
                 <div class="column is-one-fifth">
                     <player-list :players="players"></player-list>
                 </div>
             </div>
-            <button @click="start">Start</button>
+            <button class="button is-success" @click="start">Start</button>
         </div>
 
-        <div class="container" v-if="question">
-            <h1 class="is-size-1" v-html="question"></h1>
-            <h1 v-if="timer">{{timer}}</h1>
+        <div class="container has-text-centered" v-if="question">
+            <h1 class="is-size-2" v-html="question"></h1>
+            <h1 v-if="timer" class="is-size-3">{{timer}}</h1>
         </div>
 
         <div v-if="showCorrectAnswer" class="container">
-            <h2 class="is-size-2">Correct answer: <span class="has-text-success">{{correctAnswer}}</span></h2>
+            <h2 class="is-size-2 has-text-centered">Correct answer: <span class="has-text-success">{{correctAnswer}}</span></h2>
         </div>
 
-        <div class="container" v-if="score.length">
+        <div class="container" id="score" v-if="score.length">
             <ul>
-                <li v-for="(points, index) in score" :key="index">{{points.name}} - {{points.score}}</li>
+                <li class="is-size-4 has-text-centered" v-for="(points, index) in score" :key="index">{{points.name}} - {{points.score}}</li>
             </ul>
         </div>
     </div>
@@ -93,3 +91,9 @@
         }
     }
 </script>
+
+<style scoped>
+#score {
+    margin-top: 69px;
+}
+</style>
