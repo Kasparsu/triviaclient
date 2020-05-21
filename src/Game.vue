@@ -16,6 +16,11 @@
             <h1 class="is-size-1" v-html="question"></h1>
             <h1 v-if="timer">{{timer}}</h1>
         </div>
+
+        <div v-if="showCorrectAnswer" class="container">
+            <h2 class="is-size-2">Correct answer: <span class="has-text-success">{{correctAnswer}}</span></h2>
+        </div>
+
         <div class="container" v-if="score.length">
             <ul>
                 <li v-for="(points, index) in score" :key="index">{{points.name}} - {{points.score}}</li>
@@ -45,6 +50,8 @@
                     this.uid = msg.data.uid;
                 }
                 if(msg.action === 'question'){
+                    this.showCorrectAnswer = false
+                    this.correctAnswer = null
                     this.question = msg.data.question;
                     this.speak(msg.data.question)
                     this.timer = 30;
@@ -55,6 +62,8 @@
                 if(msg.action === 'score'){
                     this.question = '';
                     this.score = msg.data.score;
+                    this.correctAnswer = msg.data.correctAnswer
+                    this.showCorrectAnswer = true
                 }
             };
         },
@@ -67,7 +76,9 @@
                 started: false,
                 question: null,
                 timer: 0,
-                score: []
+                score: [],
+                correctAnswer: null,
+                showCorrectAnswer: false                
             }
         },
         methods: {
@@ -76,7 +87,7 @@
                 this.started = true;
             },
             speak(text) {                
-                var msg = new SpeechSynthesisUtterance(text)                
+                var msg = new SpeechSynthesisUtterance(text)  
                 window.speechSynthesis.speak(msg)
             }
         }
