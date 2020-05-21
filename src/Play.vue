@@ -9,7 +9,7 @@
             Game Has Started
             <h1 v-if="timer">{{timer}}</h1>
             <div class="columns" v-if="options.length">
-                <div class="column is-one-quarter" v-for="option in options">
+                <div class="column is-one-quarter" v-for="(option, index) in options" :key="index">
                     <button class="button" v-html="option" @click="answer(option)"></button>
                 </div>
             </div>

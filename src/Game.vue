@@ -1,26 +1,24 @@
 <template>
-    <div >
-
-
-    <div class="container" v-if="!started">
-        <div class="columns">
-            <div class="column">
-                Join Code is {{code}}
+    <div>
+        <div class="container" v-if="!started">
+            <div class="columns">
+                <div class="column">
+                    Join Code is {{code}}
+                </div>
+                <div class="column is-one-fifth">
+                    <player-list :players="players"></player-list>
+                </div>
             </div>
-            <div class="column is-one-fifth">
-                <player-list :players="players"></player-list>
-            </div>
+            <button @click="start">Start</button>
         </div>
-        <button @click="start">Start</button>
 
-    </div>
         <div class="container" v-if="question">
             <h1 class="is-size-1" v-html="question"></h1>
             <h1 v-if="timer">{{timer}}</h1>
         </div>
         <div class="container" v-if="score.length">
             <ul>
-                <li v-for="points in score">{{points.name}} - {{points.score}}</li>
+                <li v-for="(points, index) in score" :key="index">{{points.name}} - {{points.score}}</li>
             </ul>
         </div>
     </div>
@@ -48,6 +46,7 @@
                 }
                 if(msg.action === 'question'){
                     this.question = msg.data.question;
+                    this.speak(msg.data.question)
                     this.timer = 30;
                 }
                 if(msg.action === 'timeout'){
@@ -75,6 +74,10 @@
             start(){
                 this.ws.send(JSON.stringify({sender: 'game', action:'start', id: this.uid}));
                 this.started = true;
+            },
+            speak(text) {                
+                var msg = new SpeechSynthesisUtterance(text)                
+                window.speechSynthesis.speak(msg)
             }
         }
     }
