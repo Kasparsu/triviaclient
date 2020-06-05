@@ -1,27 +1,33 @@
 <template>
-    <div >
-
-
-    <div class="container" v-if="!started">
-        <div class="columns">
-            <div class="column">
-                Join Code is {{code}}
-            </div>
-            <div class="column is-one-fifth">
-                <player-list :players="players"></player-list>
-            </div>
+    <div>
+        <div v-if="!code">
+         <h1>Can't connect to server</h1>
         </div>
-        <button @click="start">Start</button>
+        <div v-if="code">
+            <div class="container" v-if="!started">
+                <div class="columns">
+                    <div class="column">
+                        Join Code is {{code}}
+                    </div>
+                    <div class="column is-one-fifth">
+                        <player-list :players="players"></player-list>
+                    </div>
+                </div>
 
-    </div>
-        <div class="container" v-if="question">
-            <h1 class="is-size-1" v-html="question"></h1>
-            <h1 v-if="timer">{{timer}}</h1>
-        </div>
-        <div class="container" v-if="score.length">
-            <ul>
-                <li v-for="points in score">{{points.name}} - {{points.score}}</li>
-            </ul>
+                <button @click="start">Start</button>
+
+            </div>
+
+            <div class="container" v-if="question">
+                <h1 class="is-size-1" v-html="question"></h1>
+                <h1 v-if="timer">{{timer}}</h1>
+            </div>
+
+            <div class="container" v-if="score.length">
+                <ul>
+                    <li v-for="points in score">{{points.name}} - {{points.score}}</li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -67,7 +73,6 @@
                 ws: null,
                 started: false,
                 question: null,
-                timer: 0,
                 score: []
             }
         },

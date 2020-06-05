@@ -3,8 +3,14 @@
         <div v-if="!joined">
             <input class="input" type="text" placeholder="code" v-model="code">
             <input class="input" type="text" placeholder="name" v-model="name">
-            <button class="button" @click="join">Join</button>
+            <button v-if="code && name" class="button" @click="join">Join</button>
         </div>
+
+        <div v-if="joined && !started">
+            <h1>Waiting for the game to start...</h1>
+            <div>You have joined the game lobby "{{this.code}}" with the username of "{{this.name}}".</div>
+        </div>
+
         <div v-if="started">
             Game Has Started
             <h1 v-if="timer">{{timer}}</h1>
@@ -28,11 +34,12 @@
                     this.uid = msg.data.uid;
                     this.joined = true;
                 }
+
                 if(msg.action === 'start'){
                     this.started = true;
                     this.options = msg.data.options;
-                    this.timer = 30;
                 }
+
                 if(msg.action === 'timeout'){
                     this.timer--;
                 }
