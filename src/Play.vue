@@ -1,9 +1,13 @@
 <template>
     <div class="container">
-        <div v-if="!joined">
+        <div v-if="!joined" style="margin-top: 100px;">
             <input class="input" type="text" placeholder="code" v-model="code">
-            <input class="input" type="text" placeholder="name" v-model="name">
+            <input class="input" type="text" placeholder="gamertag" v-model="name">
             <button class="button" @click="join">Join</button>
+        </div>
+         <div v-else-if="joined">
+            <h1 style="margin-top: 100px; text-transform: uppercase; text-align: center;">Your gamertag is: {{this.name}}</h1>
+            <h2 style="margin-top: 10px; text-align: center;">The game will start shortly</h2>
         </div>
         <div v-if="started">
             Game Has Started
