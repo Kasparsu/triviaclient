@@ -8900,14 +8900,14 @@ var _default = {
   props: ['player']
 };
 exports.default = _default;
-        var $6a673b = exports.default || module.exports;
+        var $20da38 = exports.default || module.exports;
       
-      if (typeof $6a673b === 'function') {
-        $6a673b = $6a673b.options;
+      if (typeof $20da38 === 'function') {
+        $20da38 = $20da38.options;
       }
     
         /* template */
-        Object.assign($6a673b, (function () {
+        Object.assign($20da38, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -8921,7 +8921,7 @@ render._withStripped = true
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-6a673b",
+            _scopeId: "data-v-20da38",
             functional: undefined
           };
         })());
@@ -8934,9 +8934,9 @@ render._withStripped = true
         if (api.compatible) {
           module.hot.accept();
           if (!module.hot.data) {
-            api.createRecord('$6a673b', $6a673b);
+            api.createRecord('$20da38', $20da38);
           } else {
-            api.reload('$6a673b', $6a673b);
+            api.reload('$20da38', $20da38);
           }
         }
 
@@ -8973,14 +8973,14 @@ var _default = {
   props: ['players']
 };
 exports.default = _default;
-        var $424f00 = exports.default || module.exports;
+        var $08ae0c = exports.default || module.exports;
       
-      if (typeof $424f00 === 'function') {
-        $424f00 = $424f00.options;
+      if (typeof $08ae0c === 'function') {
+        $08ae0c = $08ae0c.options;
       }
     
         /* template */
-        Object.assign($424f00, (function () {
+        Object.assign($08ae0c, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -9000,7 +9000,7 @@ render._withStripped = true
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-424f00",
+            _scopeId: "data-v-08ae0c",
             functional: undefined
           };
         })());
@@ -9013,9 +9013,9 @@ render._withStripped = true
         if (api.compatible) {
           module.hot.accept();
           if (!module.hot.data) {
-            api.createRecord('$424f00', $424f00);
+            api.createRecord('$08ae0c', $08ae0c);
           } else {
-            api.reload('$424f00', $424f00);
+            api.reload('$08ae0c', $08ae0c);
           }
         }
 
@@ -9065,6 +9065,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
 var _default = {
   components: {
     PlayerList: _PlayerList.default
@@ -9084,6 +9089,10 @@ var _default = {
     this.ws.onmessage = function (event) {
       var msg = JSON.parse(event.data);
       console.log(msg);
+
+      if (msg.action === 'categories') {
+        _this.categories = msg.data.trivia_categories;
+      }
 
       if (msg.action === 'code') {
         _this.code = msg.data.code;
@@ -9121,14 +9130,20 @@ var _default = {
       started: false,
       question: null,
       timer: 0,
-      score: []
+      score: [],
+      categories: null
     };
   },
   methods: {
-    start: function start() {
+    start: function start(category) {
+      if (category === 'random') {
+        category = this.categories[Math.floor(Math.random() * this.categories.length)].id;
+      }
+
       this.ws.send(JSON.stringify({
         sender: 'game',
         action: 'start',
+        category: category,
         id: this.uid
       }));
       this.started = true;
@@ -9136,38 +9151,85 @@ var _default = {
   }
 };
 exports.default = _default;
-        var $cf9886 = exports.default || module.exports;
+        var $605312 = exports.default || module.exports;
       
-      if (typeof $cf9886 === 'function') {
-        $cf9886 = $cf9886.options;
+      if (typeof $605312 === 'function') {
+        $605312 = $605312.options;
       }
     
         /* template */
-        Object.assign($cf9886, (function () {
+        Object.assign($605312, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
     !_vm.started
-      ? _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "columns" }, [
-            _c("div", { staticClass: "column" }, [
-              _vm._v(
-                "\n            Join Code is " + _vm._s(_vm.code) + "\n        "
+      ? _c(
+          "div",
+          { staticClass: "container" },
+          [
+            _c("div", { staticClass: "columns" }, [
+              _c("div", { staticClass: "column" }, [
+                _vm._v(
+                  "\n            Join Code is " +
+                    _vm._s(_vm.code) +
+                    "\n        "
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "column is-one-fifth" },
+                [_c("player-list", { attrs: { players: _vm.players } })],
+                1
               )
             ]),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "column is-one-fifth" },
-              [_c("player-list", { attrs: { players: _vm.players } })],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c("button", { on: { click: _vm.start } }, [_vm._v("Start")])
-        ])
+            !_vm.categories
+              ? _c("h1", { staticClass: "is-size-3" }, [_vm._v("Loading...")])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.categories
+              ? _c("p", [_vm._v("Please select a category:")])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm._l(_vm.categories, function(category) {
+              return _c("div", { staticClass: "is-inline" }, [
+                _c(
+                  "button",
+                  {
+                    attrs: { id: category.id },
+                    on: {
+                      click: function($event) {
+                        return _vm.start(category.id)
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(category.name))]
+                )
+              ])
+            }),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _vm.categories
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "is-size-4",
+                    on: {
+                      click: function($event) {
+                        return _vm.start("random")
+                      }
+                    }
+                  },
+                  [_vm._v("Random")]
+                )
+              : _vm._e()
+          ],
+          2
+        )
       : _vm._e(),
     _vm._v(" "),
     _vm.question
@@ -9216,9 +9278,9 @@ render._withStripped = true
         if (api.compatible) {
           module.hot.accept();
           if (!module.hot.data) {
-            api.createRecord('$cf9886', $cf9886);
+            api.createRecord('$605312', $605312);
           } else {
-            api.reload('$cf9886', $cf9886);
+            api.reload('$605312', $605312);
           }
         }
 
@@ -9275,7 +9337,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62189" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60085" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

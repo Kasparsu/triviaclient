@@ -22,6 +22,7 @@
         name: "Play",
         created() {
             this.ws = new WebSocket('ws://localhost:8080');
+            console.log("ASLDLASDJLKASJDLKJASDL")
             this.ws.onmessage = (event) => {
                 let msg = JSON.parse(event.data);
                 if(msg.action === 'uid'){

@@ -1,7 +1,6 @@
 <template>
     <div >
 
-
     <div class="container" v-if="!started">
         <div class="columns">
             <div class="column">
@@ -11,7 +10,13 @@
                 <player-list :players="players"></player-list>
             </div>
         </div>
-        <button @click="start">Start</button>
+        <h1 class="is-size-3" v-if="!categories">Loading...</h1>
+        <p v-if="categories">Please select a category:</p>
+        <div class="is-inline" v-for="category in categories">
+            <button @click="start(category.id)" :id="category.id">{{category.name}}</button>
+        </div>
+        <br>
+        <button class="is-size-4" v-if="categories" @click="start('random')">Random</button>
 
     </div>
         <div class="container" v-if="question">
@@ -37,6 +42,9 @@
             this.ws.onmessage = (event) => {
                 let msg = JSON.parse(event.data);
                 console.log(msg);
+                if(msg.action === 'categories'){
+                    this.categories = msg.data.trivia_categories;
+                }
                 if(msg.action === 'code'){
                     this.code = msg.data.code;
                 }
@@ -68,12 +76,16 @@
                 started: false,
                 question: null,
                 timer: 0,
-                score: []
+                score: [],
+                categories: null
             }
         },
         methods: {
-            start(){
-                this.ws.send(JSON.stringify({sender: 'game', action:'start', id: this.uid}));
+            start(category){
+                if(category === 'random'){
+                    category = this.categories[Math.floor(Math.random() * this.categories.length)].id;
+                }
+                this.ws.send(JSON.stringify({sender: 'game', action:'start', category: category, id: this.uid}));
                 this.started = true;
             }
         }
