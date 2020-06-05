@@ -28,6 +28,10 @@
                     this.uid = msg.data.uid;
                     this.joined = true;
                 }
+                if(msg.action === 'inappropriateName'){
+                    alert('😠bad name😠');
+                    this.name = 'bad boy'
+                }
                 if(msg.action === 'start'){
                     this.started = true;
                     this.options = msg.data.options;
