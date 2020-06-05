@@ -43,6 +43,9 @@
                 if(msg.action === 'playerJoined'){
                     this.players.push(msg.data.name);
                 }
+                if(msg.action === 'inappropriateName'){
+                    alert('bad name')
+                }
                 if(msg.action === 'uid'){
                     this.uid = msg.data.uid;
                 }
