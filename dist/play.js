@@ -8910,6 +8910,10 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
 var _default = {
   name: "Play",
   created: function created() {
@@ -8973,21 +8977,21 @@ var _default = {
   }
 };
 exports.default = _default;
-        var $033159 = exports.default || module.exports;
+        var $8aa9d3 = exports.default || module.exports;
       
-      if (typeof $033159 === 'function') {
-        $033159 = $033159.options;
+      if (typeof $8aa9d3 === 'function') {
+        $8aa9d3 = $8aa9d3.options;
       }
     
         /* template */
-        Object.assign($033159, (function () {
+        Object.assign($8aa9d3, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     !_vm.joined
-      ? _c("div", [
+      ? _c("div", { staticStyle: { "margin-top": "100px" } }, [
           _c("input", {
             directives: [
               {
@@ -9020,7 +9024,7 @@ exports.default = _default;
               }
             ],
             staticClass: "input",
-            attrs: { type: "text", placeholder: "name" },
+            attrs: { type: "text", placeholder: "gamertag" },
             domProps: { value: _vm.name },
             on: {
               input: function($event) {
@@ -9035,6 +9039,26 @@ exports.default = _default;
           _c("button", { staticClass: "button", on: { click: _vm.join } }, [
             _vm._v("Join")
           ])
+        ])
+      : _vm.joined
+      ? _c("div", [
+          _c(
+            "h1",
+            {
+              staticStyle: {
+                "margin-top": "100px",
+                "text-transform": "uppercase",
+                "text-align": "center"
+              }
+            },
+            [_vm._v("Your gamertag is: " + _vm._s(this.name))]
+          ),
+          _vm._v(" "),
+          _c(
+            "h2",
+            { staticStyle: { "margin-top": "10px", "text-align": "center" } },
+            [_vm._v("The game will start shortly")]
+          )
         ])
       : _vm._e(),
     _vm._v(" "),
@@ -9074,7 +9098,7 @@ render._withStripped = true
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-033159",
+            _scopeId: "data-v-8aa9d3",
             functional: undefined
           };
         })());
@@ -9087,9 +9111,9 @@ render._withStripped = true
         if (api.compatible) {
           module.hot.accept();
           if (!module.hot.data) {
-            api.createRecord('$033159', $033159);
+            api.createRecord('$8aa9d3', $8aa9d3);
           } else {
-            api.reload('$033159', $033159);
+            api.reload('$8aa9d3', $8aa9d3);
           }
         }
 
@@ -9150,7 +9174,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62189" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56896" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
