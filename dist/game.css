@@ -19,6 +19,10 @@
   user-select: none;
 }
 
+body.dark-theme {
+  background-color: #000;
+}
+
 .navbar-link:not(.is-arrowless)::after, .select:not(.is-multiple):not(.is-loading)::after {
   border: 3px solid transparent;
   border-radius: 2px;
