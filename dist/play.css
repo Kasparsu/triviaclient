@@ -1,3 +1,6 @@
+.dark-theme.container[data-v-ccded1] {
+    background-color: #000;
+}
 @charset "UTF-8";
 /*! bulma.io v0.8.2 | MIT License | github.com/jgthms/bulma */
 @keyframes spinAround {
@@ -17,6 +20,32 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+body {
+  height: 100vh;
+}
+
+body.dark-theme {
+  background-color: #162447;
+}
+
+body.dark-theme input, body.dark-theme button {
+  background-color: #2D2D2D;
+  border-color: #000;
+  color: #fff;
+}
+
+body.dark-theme button:hover, body.dark-theme button:focus {
+  color: #fff !important;
+}
+
+body.dark-theme ::placeholder {
+  color: grey;
+}
+
+body.dark-theme p, body.dark-theme h1 {
+  color: #fff!important;
 }
 
 .navbar-link:not(.is-arrowless)::after, .select:not(.is-multiple):not(.is-loading)::after {

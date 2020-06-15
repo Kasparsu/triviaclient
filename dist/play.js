@@ -8910,6 +8910,7 @@ exports.default = void 0;
 //
 //
 //
+//
 var _default = {
   name: "Play",
   created: function created() {
@@ -8945,7 +8946,9 @@ var _default = {
       uid: null,
       started: false,
       options: [],
-      timer: 0
+      timer: 0,
+      darkThemeText: 'Dark theme',
+      isDarkTheme: false
     };
   },
   methods: {
@@ -8969,23 +8972,45 @@ var _default = {
         }
       }));
       this.options = [];
+    },
+    switchDarkTheme: function switchDarkTheme() {
+      var body = document.body;
+      this.isDarkTheme = !this.isDarkTheme;
+
+      if (this.isDarkTheme) {
+        body.classList.add('dark-theme');
+      } else {
+        body.classList.remove('dark-theme');
+      }
     }
   }
 };
 exports.default = _default;
-        var $033159 = exports.default || module.exports;
+        var $ccded1 = exports.default || module.exports;
       
-      if (typeof $033159 === 'function') {
-        $033159 = $033159.options;
+      if (typeof $ccded1 === 'function') {
+        $ccded1 = $ccded1.options;
       }
     
         /* template */
-        Object.assign($033159, (function () {
+        Object.assign($ccded1, (function () {
           var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", [
+    _c(
+      "button",
+      {
+        on: {
+          click: function($event) {
+            return _vm.switchDarkTheme()
+          }
+        }
+      },
+      [_vm._v(_vm._s(_vm.darkThemeText))]
+    ),
+    _vm._v(" "),
     !_vm.joined
       ? _c("div", [
           _c("input", {
@@ -9040,7 +9065,8 @@ exports.default = _default;
     _vm._v(" "),
     _vm.started
       ? _c("div", [
-          _vm._v("\n        Game Has Started\n        "),
+          _c("h1", [_vm._v("Game Has Started")]),
+          _vm._v(" "),
           _vm.timer ? _c("h1", [_vm._v(_vm._s(_vm.timer))]) : _vm._e(),
           _vm._v(" "),
           _vm.options.length
@@ -9074,7 +9100,7 @@ render._withStripped = true
             render: render,
             staticRenderFns: staticRenderFns,
             _compiled: true,
-            _scopeId: "data-v-033159",
+            _scopeId: "data-v-ccded1",
             functional: undefined
           };
         })());
@@ -9087,9 +9113,9 @@ render._withStripped = true
         if (api.compatible) {
           module.hot.accept();
           if (!module.hot.data) {
-            api.createRecord('$033159', $033159);
+            api.createRecord('$ccded1', $ccded1);
           } else {
-            api.reload('$033159', $033159);
+            api.reload('$ccded1', $ccded1);
           }
         }
 
@@ -9150,7 +9176,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62189" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40349" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
